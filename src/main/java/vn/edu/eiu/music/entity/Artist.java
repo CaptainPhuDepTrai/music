@@ -1,7 +1,6 @@
 package vn.edu.eiu.music.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +19,9 @@ public class Artist {
     @Enumerated(EnumType.STRING)
     private ArtistType type;
 
+    @OneToMany(mappedBy = "artist", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Album> albums = new ArrayList<>();
+
 
     public Artist() {
     }

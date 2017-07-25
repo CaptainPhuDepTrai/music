@@ -15,18 +15,33 @@ public class Album {
 
     private String name;
 
+    @ManyToOne
     private Artist artist;
 
     @Enumerated(EnumType.STRING)
+
+    @ManyToOne
     private AlbumType albumType;
 
-    @OneToMany(mappedBy = "album")
+    //fetch: kéo hết , EAGER lấy hết
+    //cascade là thác nước, chi cho sự lan truyền
+    @OneToMany(mappedBy = "album", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Song> songs = new ArrayList<>();
 
     public Album(String name, AlbumType albumType) {
         this.name = name;
         this.albumType = albumType;
     }
+
+
+    public Album addSong(Song song){
+        songs.add(song);
+        song.setAlbum(this);
+
+        return this;
+    }
+
+
 
     public Integer getId() {
         return id;
